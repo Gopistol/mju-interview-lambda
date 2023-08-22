@@ -1,12 +1,27 @@
+import json
+import boto3
 import pdfplumber
-pdf = pdfplumber.open(PDF_FILE_PATH)
-pages = pdf.pages
-text = ""
-for page in pages:
-    sub = page.extract_text()
-    text += sub
-# text + 질문 스크립트 합쳐서 GPT에게 입력
-print(text)
+from io import BytesIO
 
-# DB -> 이력서 text
-# text + script => GPT3.5 => JSON형식으로 질문 받아서 프론트에 보내기
+s3_client = boto3.client('s3')
+
+
+def lambda_handler(event, context):
+    bucket_name = 'mju-interview-bucket-for-lambda'
+    file_name = 'opci.pdf'
+
+    s3_response = s3_client.get_object(Bucket=bucket_name, Key=file_name)
+
+    file_data = s3_response["Body"].read()
+
+    text = ''
+
+    pdf = pdfplumber.open(BytesIO(file_data))
+
+    for page in pdf.pages:
+        text = page.extract_text()
+
+    return {
+        'statusCode': 200,
+        'body': json.dumps(text, ensure_ascii=False)
+    }
