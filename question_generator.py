@@ -1,7 +1,7 @@
 import json
 import openai
 
-openai.api_key = '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'
+openai.api_key = 'My API key'
 
 def lambda_handler(event, context):
     # TODO implement
