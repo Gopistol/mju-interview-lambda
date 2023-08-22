@@ -1,8 +1,7 @@
 import json
 import openai
 
-openai.api_key = 'My API key'
-
+openai.api_key = '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'
 
 def lambda_handler(event, context):
     # TODO implement
@@ -17,7 +16,7 @@ def lambda_handler(event, context):
             },
             {
                 "role": "system",
-                "content": "면접자가 어떤 직무를 희망하는지를 유추해서 그 직무와 관련된 질문을 해줘.",
+                "content": "면접자가 어떤 직무를 희망하는지를 유추해서 그 직무와 관련된 질문을 해줘. 서론을 포함하지 말고 질문만 해줘.",
             },
             {
                 "role": "system",
