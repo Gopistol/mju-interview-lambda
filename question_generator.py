@@ -1,22 +1,27 @@
 import json
 import openai
 
-openai.api_key = 'My API key'
+openai.api_key = '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'
+
 
 def lambda_handler(event, context):
     # TODO implement
-    content = event['body']
+    body = event['body']
+    json_body = json.loads(body)
+
+    role = json_body['role']
+    content = json_body['content']
 
     completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
             {
                 "role": "system",
-                "content": "너는 회사의 면접관이야. 면접자의 자기소개서를 보고 관련 질문 5개를 해줘.",
+                "content": f"너는 {role} 면접관이야. 면접자의 자기소개서를 보고 관련 질문 5개를 해줘.",
             },
             {
                 "role": "system",
-                "content": "면접자가 어떤 직무를 희망하는지를 유추해서 그 직무와 관련된 질문을 해줘. 서론을 포함하지 말고 질문만 해줘.",
+                "content": "질문할 때, 서론을 포함하지 말고 질문만 해줘.",
             },
             {
                 "role": "system",
@@ -53,5 +58,5 @@ def lambda_handler(event, context):
         'body': json.dumps(response_array, ensure_ascii=False),
         "headers": {
             "Content-Type": "application/json"
-        },
+        }
     }
