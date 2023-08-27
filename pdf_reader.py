@@ -4,9 +4,8 @@ import pdfplumber
 from io import BytesIO
 
 s3_client = boto3.client('s3')
-bucket_name = 'mju-interview-bucket-for-lambda'
+bucket_name = 'mju-interview-pdf-bucket'
 file_name = 'test.pdf'
-
 
 def lambda_handler(event, context):
     s3 = boto3.resource('s3')
@@ -16,7 +15,7 @@ def lambda_handler(event, context):
     except Exception as e:  # 존재하지 않을 때
         return {
             'statusCode': 500,
-            'body': 'file does not exist'
+            'body': '버킷 내 파일이 없습니다.'
         }
     else:
         # test.pdf 파일이 있을 때
@@ -29,12 +28,12 @@ def lambda_handler(event, context):
         pdf = pdfplumber.open(BytesIO(file_data))
 
         for page in pdf.pages:
-            text = page.extract_text()
+            text += page.extract_text()
 
         # 변환 후 파일 삭제
         s3_client.delete_object(Bucket=bucket_name, Key=file_name)
 
         return {
             'statusCode': 200,
-            'body': json.dumps(text, ensure_ascii=False)
+            'body': text
         }
