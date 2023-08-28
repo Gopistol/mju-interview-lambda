@@ -4,8 +4,8 @@ import pdfplumber
 from io import BytesIO
 
 s3_client = boto3.client('s3')
-bucket_name = 'mju-interview-pdf-bucket'
-file_name = 'test.pdf'
+bucket_name = 'MY_BUCKET_NAME'
+file_name = 'PDF_FILE_NAME'
 
 def lambda_handler(event, context):
     s3 = boto3.resource('s3')
