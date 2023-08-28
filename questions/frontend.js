@@ -35,8 +35,12 @@ undefined와 null의 차이점을 설명하세요.
 객체를 복사해서 새로운 객체를 만들고 싶습니다. 코드를 구현해보세요. (객체의 깊이는 1단계만 있다고 가
 Array.from 이 모든 브라우저에서 동작하도록 polyfill코드를 만들어보세요.
 프로그래밍 요구사항을 받았을때, 구현하기 전까지 어떤 과정을 거치시나요?
-prototype 의 동작방식에 대해서 설명해보세요.`
+prototype 의 동작방식에 대해서 설명해보세요.`;
 
-const textArray = questions.split('\n').map((line, index) => ({ id: index + 1, text: line }));
+const lines = questions.split("\n");
+const textObject = {};
+lines.forEach((line, index) => {
+  textObject[index + 1] = line;
+});
 
-console.log(textArray);
+console.log(textObject);

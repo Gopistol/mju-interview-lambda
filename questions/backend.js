@@ -32,8 +32,12 @@ View란 무엇인가요?
 인덱스란 무엇인가요? 어떻게 동작 하나요?
 인덱스의 알고리즘에는 어떤 것들이 있나요?
 Table Full Scan과 Index Range Scan 을 설명해주세요.
-클러스터드 인덱스와 비클러스터드 인덱스란 무엇인가요?`
+클러스터드 인덱스와 비클러스터드 인덱스란 무엇인가요?`;
 
-const textArray = questions.split('\n').map((line, index) => ({ id: index + 1, text: line }));
+const lines = questions.split("\n");
+const textObject = {};
+lines.forEach((line, index) => {
+  textObject[index + 1] = line;
+});
 
-console.log(textArray);
+console.log(textObject);
